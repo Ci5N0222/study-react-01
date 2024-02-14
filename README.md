@@ -1,16 +1,17 @@
-# Project info
-## Start
-vscode
-node.js
-
-### `npx create-react-app 'project-name`
-react project create script
+# Project Start
+## Install
+- VSCode \
+- Node.js \
 
 ## Version script
 ### `npm -v`
-npm version : 10.2.3
+- npm version : 10.2.3
 ### `node -v`
-node version : 20.10.0
+- node version : 20.10.0
+
+## React project create
+### `npx create-react-app 'project-name`
+- react project create script
 
 ## Available Scripts
 
