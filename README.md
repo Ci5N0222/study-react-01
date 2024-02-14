@@ -1,6 +1,16 @@
-# Getting Started with Create React App
+# Project info
+## Start
+vscode
+node.js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### `npx create-react-app 'project-name`
+react project create script
+
+## Version script
+### `npm -v`
+npm version : 10.2.3
+### `node -v`
+node version : 20.10.0
 
 ## Available Scripts
 
