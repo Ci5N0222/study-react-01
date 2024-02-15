@@ -23,9 +23,9 @@ function App() {
   // 1. Array 자료 갯수만큼 함수안의 코드 실행
   [1, 2, 3].map(function(a){
     // 2. 함수의 파라미터는 Array안에 있던 자료
-    console.log(a);
+    // console.log(a);
      // 3. return에 뭐 적으면 array로 담아줌
-    return '12321'
+    // return '12321'
   })
 
   // Destructuring 문법
@@ -59,9 +59,9 @@ function App() {
          */
         
         // Shallow copy를 만들어서 수정해야한다.
-        let copy = [...title];
-        copy[0] = '여자 코트 추천';
-        setTitle(copy);
+        // let copy = [...title];
+        // copy[0] = '여자 코트 추천';
+        // setTitle(copy);
       } }> 글 수정 </button>
 
       {
@@ -80,6 +80,9 @@ function App() {
                     likeUpdate(copy)}}>👍</span> { like[i] } 
                 </h4>
                 <p>2월 15일 발행</p>
+                <button onClick={(e) => {
+                  setTitle(title.filter(title => title !== index));
+                }}>삭제</button>
               </div>
             </div>
           )
@@ -87,10 +90,14 @@ function App() {
       }
 
       <input onChange={(e) => {
-        console.log(e.target.value)}}>
-        
+        setInputValue(e.target.value);}}>
       </input>
-
+      <button onClick={() => {
+        const newList = title.concat(inputValue);
+        setTitle(newList);
+        setInputValue('');
+      }}>등록</button>
+      
       {
         modal == true ? <Modal titleState={titleState} setTitle={setTitle} title={title}/> : null
       }
