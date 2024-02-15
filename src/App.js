@@ -16,6 +16,7 @@ function App() {
   // 자주 바뀌는 변수는 state를 사용하여 저장
   let [title, titleUpdate] = useState(['남자 코트 추천', '강남 우동맛집', '리액트 독학']);
   let [like, likeUpdate] = useState(0);
+  let [modal, setModal] = useState(false);
 
   // Destructuring 문법
   // let num = [1, 2];
@@ -32,10 +33,6 @@ function App() {
       <div className="black-nav">
         <h4>React Blog</h4>
       </div>
-      
-      <button onclick={ () => {
-        
-      }}> 정렬 </button>
 
       <button onClick={ () => {
         /**
@@ -66,18 +63,20 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className='list'>
-        <h4>{ title[2] }</h4>
+        <h4 onClick={ () => { modal == true ? setModal(false) : setModal(true)} }>{ title[2] }</h4>
         <p>2월 17일 발행</p>
       </div>
-
-      <Detail></Detail>
+      
+      {
+        modal == true ? <Modal /> : null
+      }
 
     </div>
   );
 }
 
 // Detail component
-function Detail() {
+function Modal() {
   return(
     <div className='modal'>
         <h4>제목</h4>
