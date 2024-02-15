@@ -34,35 +34,29 @@ function App() {
   // let c= num[1];
   // let [a, c] = [1, 2];
 
-  function likeUp() {
-    likeUpdate(like++);
-  }
+    /**
+   * State가 Array/Object 면 독립적 카피본을 만들어서 수정해야 한다.
+   * 중요 : 기존state == 신규state 가 true 일 경우 state가 변경되지 않는다.
+   * Array/Object 특징
+   * ** Array/Object에 담은 변수엔 화살표만 저장된다.
+   * ** (메모리에 할당된 Array 데이터를 가리키는 화살표)
+   * 
+   * 동작하지 않는 예
+   * let copy = title;
+   * title[0] = '여자 코트 추천';
+   * setTitle(copy);
+   */
+  
+  // Shallow copy를 만들어서 수정해야한다.
+  // let copy = [...title];
+  // copy[0] = '여자 코트 추천';
+  // setTitle(copy);
 
   return (
     <div className="App">
       <div className="black-nav">
         <h4>React Blog</h4>
       </div>
-
-      <button onClick={ () => {
-        /**
-         * State가 Array/Object 면 독립적 카피본을 만들어서 수정해야 한다.
-         * 중요 : 기존state == 신규state 가 true 일 경우 state가 변경되지 않는다.
-         * Array/Object 특징
-         * ** Array/Object에 담은 변수엔 화살표만 저장된다.
-         * ** (메모리에 할당된 Array 데이터를 가리키는 화살표)
-         * 
-         * 동작하지 않는 예
-         * let copy = title;
-         * title[0] = '여자 코트 추천';
-         * setTitle(copy);
-         */
-        
-        // Shallow copy를 만들어서 수정해야한다.
-        // let copy = [...title];
-        // copy[0] = '여자 코트 추천';
-        // setTitle(copy);
-      } }> 글 수정 </button>
 
       {
         title.map(function(index, i){
@@ -80,8 +74,13 @@ function App() {
                     likeUpdate(copy)}}>👍</span> { like[i] } 
                 </h4>
                 <p>2월 15일 발행</p>
-                <button onClick={(e) => {
-                  setTitle(title.filter(title => title !== index));
+                <button onClick={() => {
+                  let copy = [...title];
+                  // Array 항목 삭제
+                  copy.splice(i, 1);
+                  setTitle(copy);
+
+                  // setTitle(title.filter(title => title !== index));
                 }}>삭제</button>
               </div>
             </div>
@@ -93,9 +92,13 @@ function App() {
         setInputValue(e.target.value);}}>
       </input>
       <button onClick={() => {
-        const newList = title.concat(inputValue);
-        setTitle(newList);
-        setInputValue('');
+        let copy = [...title];
+        // Array 항목 추가
+        copy.unshift(inputValue);
+        setTitle(copy);
+        // const newList = title.concat(inputValue);
+        // setTitle(newList);
+        // setInputValue('');
       }}>등록</button>
       
       {
@@ -106,7 +109,7 @@ function App() {
   );
 }
 
-// Detail component
+// Function component
 function Modal(props) {
   return(
     <div className='modal'>
@@ -120,6 +123,28 @@ function Modal(props) {
         }}>글수정</button>
       </div>
   )
+}
+
+// Class component
+class Detail extends React.Component {
+ constructor(props){
+  super(props);
+  this.state = {
+    name : 'Noh',
+    age : 20
+  }
+ }
+ render(){
+  return(
+    <div>
+      Hello {this.props.name}
+      Hello {this.state.name}
+      <button onClick={() => {
+        this.setState({name : Sion})
+      }}></button>
+    </div>
+  )
+ }
 }
 
 export default App;
