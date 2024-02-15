@@ -14,7 +14,7 @@ import { useState } from 'react';
 function App() {
   
   // 자주 바뀌는 변수는 state를 사용하여 저장
-  let [title, b] = useState(['남자 코트 추천', '강남 우동맛집', '리액트 독학']);
+  let [title, titleUpdate] = useState(['남자 코트 추천', '강남 우동맛집', '리액트 독학']);
   let [like, likeUpdate] = useState(0);
 
   // Destructuring 문법
@@ -32,8 +32,22 @@ function App() {
       <div className="black-nav">
         <h4>React Blog</h4>
       </div>
+      
+      <button onClick={ () => {
+        // State가 Array/Object 면 독립적 카피본을 만들어서 수정해야 한다.
+        
+        // let copy = title;
+        // title[0] = '여자 코트 추천';
+        // titleUpdate(copy);
+        
+        let copy = [...title];
+        copy[0] = '여자 코트 추천';
+        titleUpdate(copy);
+        
+      } }> 글 수정 </button>
+      
       <div className='list'>
-        <h4>{ title[0] } <span onClick={ likeUp }>👍</span> { like } </h4>
+        <h4> { title[0] } <span onClick={ likeUp }>👍</span> { like } </h4>
         <p>2월 17일 발행</p>
       </div>
       <div className='list'>
