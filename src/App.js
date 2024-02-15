@@ -15,8 +15,16 @@ function App() {
   
   // 자주 바뀌는 변수는 state를 사용하여 저장
   let [title, titleUpdate] = useState(['남자 코트 추천', '강남 우동맛집', '리액트 독학']);
-  let [like, likeUpdate] = useState(0);
+  let [like, likeUpdate] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
+
+  // 1. Array 자료 갯수만큼 함수안의 코드 실행
+  [1, 2, 3].map(function(a){
+    // 2. 함수의 파라미터는 Array안에 있던 자료
+    console.log(a);
+     // 3. return에 뭐 적으면 array로 담아줌
+    return '12321'
+  })
 
   // Destructuring 문법
   // let num = [1, 2];
@@ -53,20 +61,26 @@ function App() {
         copy[0] = '여자 코트 추천';
         titleUpdate(copy);
       } }> 글 수정 </button>
-      
-      <div className='list'>
-        <h4> { title[0] } <span onClick={ likeUp }>👍</span> { like } </h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className='list'>
-        <h4>{ title[1] } <span onClick={()=>{likeUpdate(like++)} }>👍</span> { like } </h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className='list'>
-        <h4 onClick={ () => { modal == true ? setModal(false) : setModal(true)} }>{ title[2] }</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      
+
+      {
+        title.map(function(index, i){
+          return (
+            <div>
+              <div className='list' key={i}>
+                <h4>
+                  <span onClick={() => {modal==true ? setModal(false) : setModal(true)}}>{ index }</span> 
+                  <span onClick={()=>{
+                      let copy = [...like];
+                      copy[i]++ 
+                      likeUpdate(copy)}}>👍</span> { like[i] } 
+                </h4>
+                <p>2월 17일 발행</p>
+              </div>
+            </div>
+          )
+        })
+      }
+
       {
         modal == true ? <Modal /> : null
       }
