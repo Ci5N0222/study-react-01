@@ -18,6 +18,7 @@ function App() {
   let [like, likeUpdate] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
   let [titleState, setTitleState] = useState(0);
+  let [inputValue, setInputValue] = useState('');
 
   // 1. Array 자료 갯수만큼 함수안의 코드 실행
   [1, 2, 3].map(function(a){
@@ -72,10 +73,11 @@ function App() {
                   <span onClick={() => {
                     modal==true ? setModal(false) : setModal(true)
                     setTitleState(i)}}>{ index }</span> 
-                  <span onClick={()=>{
-                      let copy = [...like];
-                      copy[i]++ 
-                      likeUpdate(copy)}}>👍</span> { like[i] } 
+                  <span onClick={(e)=>{
+                    e.stopPropagation();
+                    let copy = [...like];
+                    copy[i]++ 
+                    likeUpdate(copy)}}>👍</span> { like[i] } 
                 </h4>
                 <p>2월 15일 발행</p>
               </div>
@@ -84,6 +86,10 @@ function App() {
         })
       }
 
+      <input onChange={(e) => {
+        console.log(e.target.value)}}>
+        
+      </input>
 
       {
         modal == true ? <Modal titleState={titleState} setTitle={setTitle} title={title}/> : null
