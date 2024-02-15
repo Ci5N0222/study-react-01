@@ -14,9 +14,10 @@ import { useState } from 'react';
 function App() {
   
   // 자주 바뀌는 변수는 state를 사용하여 저장
-  let [title, titleUpdate] = useState(['남자 코트 추천', '강남 우동맛집', '리액트 독학']);
+  let [title, setTitle] = useState(['남자 코트 추천', '강남 우동맛집', '리액트 독학']);
   let [like, likeUpdate] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
+  let [titleState, setTitleState] = useState(0);
 
   // 1. Array 자료 갯수만큼 함수안의 코드 실행
   [1, 2, 3].map(function(a){
@@ -53,13 +54,13 @@ function App() {
          * 동작하지 않는 예
          * let copy = title;
          * title[0] = '여자 코트 추천';
-         * titleUpdate(copy);
+         * setTitle(copy);
          */
         
         // Shallow copy를 만들어서 수정해야한다.
         let copy = [...title];
         copy[0] = '여자 코트 추천';
-        titleUpdate(copy);
+        setTitle(copy);
       } }> 글 수정 </button>
 
       {
@@ -68,21 +69,24 @@ function App() {
             <div>
               <div className='list' key={i}>
                 <h4>
-                  <span onClick={() => {modal==true ? setModal(false) : setModal(true)}}>{ index }</span> 
+                  <span onClick={() => {
+                    modal==true ? setModal(false) : setModal(true)
+                    setTitleState(i)}}>{ index }</span> 
                   <span onClick={()=>{
                       let copy = [...like];
                       copy[i]++ 
                       likeUpdate(copy)}}>👍</span> { like[i] } 
                 </h4>
-                <p>2월 17일 발행</p>
+                <p>2월 15일 발행</p>
               </div>
             </div>
           )
         })
       }
 
+
       {
-        modal == true ? <Modal /> : null
+        modal == true ? <Modal titleState={titleState} setTitle={setTitle} title={title}/> : null
       }
 
     </div>
@@ -90,12 +94,17 @@ function App() {
 }
 
 // Detail component
-function Modal() {
+function Modal(props) {
   return(
     <div className='modal'>
-        <h4>제목</h4>
+        <h4> { props.title[props.titleState] } </h4>
         <p>날짜</p>
         <p>상세 내용</p>
+        <button onClick={() => {
+          let copy = [...props.title]
+          copy[0] = '여자코트 추천';
+          props.setTitle(copy);
+        }}>글수정</button>
       </div>
   )
 }
