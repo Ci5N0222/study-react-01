@@ -1,3 +1,6 @@
+// warning message disable
+/* eslint-disable */
+
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
@@ -10,26 +13,35 @@ import { useState } from 'react';
 
 function App() {
   
-  let post = '강남 우동 맛집';
-  let [title, b] = useState('남자 코트 추천');
+  // 자주 바뀌는 변수는 state를 사용하여 저장
+  let [title, b] = useState(['남자 코트 추천', '강남 우동맛집', '리액트 독학']);
+  let [like, likeUpdate] = useState(0);
 
   // Destructuring 문법
-  let num = [1, 2];
+  // let num = [1, 2];
   // let a = num[0];
   // let c= num[1];
-  let [a, c] = [1, 2];
+  // let [a, c] = [1, 2];
+
+  function likeUp() {
+    likeUpdate(like++);
+  }
 
   return (
     <div className="App">
       <div className="black-nav">
-        <h4>Blog</h4>
+        <h4>React Blog</h4>
       </div>
       <div className='list'>
-        <h4>글 제목</h4>
+        <h4>{ title[0] } <span onClick={ likeUp }>👍</span> { like } </h4>
         <p>2월 17일 발행</p>
       </div>
       <div className='list'>
-        <h4>{ title }</h4>
+        <h4>{ title[1] } <span onClick={()=>{likeUpdate(like++)} }>👍</span> { like } </h4>
+        <p>2월 17일 발행</p>
+      </div>
+      <div className='list'>
+        <h4>{ title[2] }</h4>
         <p>2월 17일 발행</p>
       </div>
     </div>
